@@ -34,13 +34,12 @@ function PostComposer(){
                         }}></input>
                 </div>
                 <div className="userPost">
-                        <textarea value={postText} onChange={(e)=> setPostText(e.target.value)}></textarea>
-                        <p>Characters:0/n</p>
+                        <textarea rows="30" cols="50" value={postText} onChange={(e)=> setPostText(e.target.value)}></textarea>
+                        <p>Characters:{postText.length}</p>
                 </div>
                 <div className="errors">
                     <p>⚠️No post written</p>
                     <p>{selectedPlatforms}</p>
-                    
                 </div>
             </form>
         </div>
