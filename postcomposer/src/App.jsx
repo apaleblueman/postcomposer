@@ -1,10 +1,9 @@
 import PostComposer from "./components/postcomposer";
 function App() {
-
-
   return (
     <>
     <PostComposer></PostComposer>
+    
     </>
   )
 }
