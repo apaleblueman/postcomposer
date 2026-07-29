@@ -1,11 +1,14 @@
 import { useState } from "react";
 import EnforceRules from "./rulesEnforcer";
+import { platformRules } from "./rulesEnforcer";
+
 
 
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
     return sum;
 }
+
 function ValidatePost(text, selectedPlatforms){
     const errorArray = [];
     if(selectedPlatforms.length<=0){
@@ -15,8 +18,8 @@ function ValidatePost(text, selectedPlatforms){
                         errorArray.push("Not enough characters for"+selectedPlatforms)
         }
         const platformNumber  = DeterminePlatform(selectedPlatforms);
-        console.log("EnforceRules returned:", EnforceRules(text, platformNumber));
-        console.log("errorArray is now:", errorArray);
+        // console.log("EnforceRules returned:", EnforceRules(text, platformNumber));
+        // console.log("errorArray is now:", errorArray);
         errorArray.push(...EnforceRules(text, platformNumber));
     }
     // console.log(typeof(errorArray))
@@ -65,7 +68,13 @@ function PostComposer(){
                 </div>
                 <div className="userPost">
                         <textarea rows="20" cols="90" value={postText} onChange={(e)=> setPostText(e.target.value)}></textarea>
-                        <p>Characters:{selectedPlatforms}:{postText.length}</p>
+                </div>
+                <div className="charactersList">
+                        {selectedPlatforms.map((plt)=>{
+                            if(plt == 1){return <p>T:{postText.length}/{platformRules.twitter.maxChars}</p>}
+                            if(plt == 3){return <p>I:{postText.length}/{platformRules.instagram.maxChars}</p>}
+                            if(plt == 5){return <p>F:{postText.length}/{platformRules.facebook.maxChars}</p>}
+                        })}
                 </div>
                 <div className="errors">
                     {foundErrors}
