@@ -1,70 +1,36 @@
 import { useState } from "react";
+import EnforceRules from "./rulesEnforcer";
 
 
-//rule objects
-const platformRules = {
-  twitter: {
-    maxChars: 280,
-    minChars: 1,
-    requiresHashtag: false,
-    label: "X (Twitter)"
-  },
-  instagram: {
-    maxChars: 2200,
-    minChars: 1,
-    requiresHashtag: true,
-    label: "Instagram"
-  },
-  facebook: {
-    maxChars: 63206,
-    minChars: 1,
-    requiresHashtag: false,
-    label: "Facebook"
-  }
-};
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
     return sum;
 }
 function ValidatePost(text, selectedPlatforms){
+    const errorArray = [];
     if(selectedPlatforms.length<=0){
-        return "No platforms selected!"
+        errorArray.push("No platforms selected!")
     }else{
-        const platformNumber  = DeterminePlatform(selectedPlatforms);
-        switch(platformNumber){
-            case 1:
-                console.log("X only");
-                break;
-            case 3:
-                console.log("insta only");
-                break;
-            case 5:
-                console.log("FB only");
-                break;
-            case 6:
-                console.log("X and FB only");
-                break;
-            case 8:
-                console.log("insta and FB only");
-                break;
-            case 4:
-                console.log("X and insta only");
-                break;
-            case 9:
-                console.log("all 3 platforms");
-                break;
-            default:
-                console.log("something went wrong");
-                break;
-
+        if(text.length < 1){
+                        errorArray.push("Not enough characters for"+selectedPlatforms)
         }
+        const platformNumber  = DeterminePlatform(selectedPlatforms);
+        console.log("EnforceRules returned:", EnforceRules(text, platformNumber));
+        console.log("errorArray is now:", errorArray);
+        errorArray.push(...EnforceRules(text, platformNumber));
     }
+    // console.log(typeof(errorArray))
+    return errorArray;
 }
-
+function List(text, selectedPlatforms){
+    const errorArray = ValidatePost(text, selectedPlatforms)
+    const displayList = errorArray.map((error)=><li>{error}</li>);
+    return <ul>{displayList}</ul>
+}
 function PostComposer(){
     const [postText, setPostText] = useState('');
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
-    const foundErrors = ValidatePost(postText, selectedPlatforms);
+    const foundErrors = List(postText, selectedPlatforms);
     // console.log(foundErrors);
     return(
         <div>
@@ -98,11 +64,11 @@ function PostComposer(){
                         }}></input>
                 </div>
                 <div className="userPost">
-                        <textarea rows="30" cols="50" value={postText} onChange={(e)=> setPostText(e.target.value)}></textarea>
-                        <p>Characters:{postText.length}</p>
+                        <textarea rows="20" cols="90" value={postText} onChange={(e)=> setPostText(e.target.value)}></textarea>
+                        <p>Characters:{selectedPlatforms}:{postText.length}</p>
                 </div>
                 <div className="errors">
-                    <p className="errorMsg">{foundErrors}</p>
+                    {foundErrors}
                 </div>
             </form>
         </div>
