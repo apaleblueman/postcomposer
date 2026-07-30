@@ -1,9 +1,11 @@
 import PostComposer from "./components/postcomposer";
-function App() {
+
+import "./assets/PostComposer.css"
+function App({}) {
+  
   return (
     <>
     <PostComposer></PostComposer>
-    
     </>
   )
 }

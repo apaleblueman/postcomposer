@@ -113,8 +113,24 @@ h1{
   /* border: solid 5px greenyellow; */
   color: green;
 }
-
-
+.clipboard{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clipboard>button{
+  padding: 10px 10px 10px 10px;
+  border: solid 5px #89D2DC;
+  background-color: transparent;
+  border-radius: 20px;
+}
+.clipboard>button:hover{
+  padding: 10px 10px 10px 10px;
+  border: solid 5px #89D2DC;
+  background-color: white;
+  color: #0D1317;
+  border-radius: 20px;
+}
 @media (max-width: 768px) {
     .platforms {
         flex-direction: column;

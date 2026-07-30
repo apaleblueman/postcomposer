@@ -4,6 +4,8 @@ import { platformRules } from "./rulesEnforcer";
 import "../assets/PostComposer.css"
 import "../assets/platformInfo"
 import { platformInfo } from "../assets/platformInfo";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
     return sum;
@@ -79,6 +81,11 @@ function PostComposer(){
                         className={hasErrors && postText.length >= 0 ? 'has-error':'ready'}>
                         
                         </textarea>
+                        <CopyToClipboard text={postText}>
+                        <div className="clipboard">
+                        <button type="button">Copy to clipboard</button>
+                        </div>
+                        </CopyToClipboard>
                 </div>
                 <div className="charactersList">
                         {selectedPlatforms.map((plt)=>{
@@ -93,7 +100,6 @@ function PostComposer(){
                 </div>
                 <div className={isReady?'readyPost':'errors'}>
                     <ul>{displayList}</ul>
-                    
                 </div>
             </form>
         </div>
