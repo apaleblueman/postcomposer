@@ -1,3 +1,54 @@
+body{
+  background: #0D1317;
+}
+h1{
+  font-size: 2.5em;
+  color: #89D2DC;
+}
+.heading{
+  display: flex;
+  justify-content:space-between;
+  padding: 1%;
+  border-bottom: 0.5em solid #89D2DC;
+}
+.userchoice{
+  padding: 0.5em;
+  font-size: larger;
+  color: #89D2DC;
+}
+.userPost>textarea{
+  background-color:white;
+  border-radius: 2em;
+  padding: 1em;
+  color: black;
+  font-size: 1em;
+}
+.platforms{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em;
+}
+
+.link{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+   color: #89D2DC;
+}
+.link:hover{
+  color: rgb(106, 92, 92);  
+  text-decoration: underline;
+}
+.platforms > div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .errors > ul{
   display: flex;
   justify-content: center;
@@ -6,9 +57,32 @@
   gap:0.6em;
   
 }
+.readyPost > ul{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  gap:0.6em;
+}
 .errors >ul> li{
-  border:solid 1px white;
-  
+  border-color: red;
+  border-style: solid;
+  border: 1px 10px 10px 10px;
+  border-radius: 20px 20px 20px 1px;
+  padding: 1%;
+  background-color: rgb(225, 168, 168);
+  color: black;
+
+}
+.readyPost >ul> li{
+  border-color: rgb(17, 255, 0);
+  border-style: solid;
+  border: 1px 10px 10px 10px;
+  border-radius: 20px 20px 20px 1px;
+  padding: 1%;
+  background-color: rgb(173, 225, 168);
+  color: black;
+
 }
 .charactersList{
   display: flex;
@@ -26,19 +100,20 @@
 }
 
 .has-error{
-  border: solid 5px red;
+  border: solid 5px rgb(247, 123, 123);
 }
 .ready{
   border: solid 5px greenyellow;
 }
 .overflow{
   /* border: solid 5px red; */
-  color: red;
+  color: rgb(245, 21, 21);
 }
 .underflow{
   /* border: solid 5px greenyellow; */
   color: green;
 }
+
 
 @media (max-width: 768px) {
     .platforms {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-
+import "../assets/platformInfo"
 //rule objects
-export const platformRules = {
+export const platformRules = {                  
   twitter: {
     maxChars: 280,
     minChars: 1,
@@ -22,32 +22,31 @@ export const platformRules = {
 
 function enforceTwitter(text,platformNumber,rulesArray){
         if(text.length < platformRules.twitter.minChars){
-            rulesArray.push("Twitter:Your post needs more characters")
+            rulesArray.push("🐦️:Your post needs more characters")
         }if(text.length > platformRules.twitter.maxChars){
-            rulesArray.push("Twitter:Your post needs less characters")
+            rulesArray.push("🐦️:Your post needs less characters")
         }if(!text.includes('#')){
-            rulesArray.push("Twitter:Use hashtags to get better reach on X")
+            rulesArray.push("🐦️:Use hashtags to get better reach on X")
         }
 }
 function enforceInstagram(text,platformNumber,rulesArray){
             if(text.length < platformRules.instagram.minChars){
-            rulesArray.push("instagram:Your post needs more characters")
+            rulesArray.push("📸:Your post needs more characters")
             }if(text.length > platformRules.instagram.maxChars){
-            rulesArray.push("instagram:Your post needs less characters")
+            rulesArray.push("📸:Your post needs less characters")
             }if(!text.includes('#')){
-            rulesArray.push("instagram:Use hashtags to get better reach on Instagram")
+            rulesArray.push("📸:Use hashtags to get better reach on Instagram")
             }
 }
 function enforceFacebook(text,platformNumber,rulesArray){
             if(text.length < platformRules.facebook.minChars){
-                rulesArray.push("facebook:Your post needs more characters")
+                rulesArray.push("📘:Your post needs more characters")
             }if(text.length > platformRules.facebook.maxChars){
-                rulesArray.push("facebook:Your post needs less characters")
+                rulesArray.push("📘:Your post needs less characters")
             }if(!text.includes('#')){
-                rulesArray.push("facebook:Use hashtags to get better reach on Facebook")
+                rulesArray.push("📘:Use hashtags to get better reach on Facebook")
             }
 }
-
 function EnforceRules(text,platformNumber){
     const rulesArray = [];
     switch(platformNumber){
@@ -85,20 +84,10 @@ function EnforceRules(text,platformNumber){
                     //all 3 platforms";
                     break;
                 default:
-                    console.log("something went wrong");
                     break;
     
             }
             return rulesArray;
 }
-
-// export function CharactersList({post}){
-//     const [counter, setCounter] = useState(0);
-//     return(
-//         <>
-//             <p>{post.length}/{}</p>
-//         </>
-//     );
-// }
 
 export default EnforceRules;
