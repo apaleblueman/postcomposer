@@ -1,0 +1,56 @@
+.errors > ul{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  gap:0.6em;
+  
+}
+.errors >ul> li{
+  border:solid 1px white;
+  
+}
+.charactersList{
+  display: flex;
+  justify-content: center;
+  gap: 0.8em;
+  padding: 0.6em;
+}
+.overflow{
+  color: red;
+}
+
+.favicon{
+  height: auto;
+  width: 20px;
+}
+
+.has-error{
+  border: solid 5px red;
+}
+.ready{
+  border: solid 5px greenyellow;
+}
+.overflow{
+  /* border: solid 5px red; */
+  color: red;
+}
+.underflow{
+  /* border: solid 5px greenyellow; */
+  color: green;
+}
+
+@media (max-width: 768px) {
+    .platforms {
+        flex-direction: column;
+        gap: 8px;
+    }
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .charactersList p {
+        display: block;
+        margin: 4px 0;
+    }
+}
