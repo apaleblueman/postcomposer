@@ -2,7 +2,8 @@ import { useState } from "react";
 import EnforceRules from "./rulesEnforcer";
 import { platformRules } from "./rulesEnforcer";
 import "../assets/PostComposer.css"
-
+import "../assets/platformInfo"
+import { platformInfo } from "../assets/platformInfo";
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
     return sum;
@@ -74,11 +75,13 @@ function PostComposer(){
                 </div>
                 <div className="charactersList">
                         {selectedPlatforms.map((plt)=>{
-                            if(plt == 1){
-                                return <p className={postText.length >= platformRules.twitter.maxChars ? 'overflow':'underflow'}><img className="favicon" src="https://x.com/favicon.ico" alt="X"/>:{postText.length}/{platformRules.twitter.maxChars}</p>
-                            }
-                            if(plt == 3){return <p className={postText.length >= platformRules.instagram.maxChars ? 'overflow':'underflow'}><img className="favicon" src="https://static.cdninstagram.com/rsrc.php/y4/r/QaBlI0OZiks.ico" alt="IG"/>:{postText.length}/{platformRules.instagram.maxChars}</p>}
-                            if(plt == 5){return <p className={postText.length >= platformRules.facebook.maxChars ? 'overflow':'underflow'}><img className="favicon" src="https://static.xx.fbcdn.net/rsrc.php/y1/r/ay1hV6OlegS.ico" alt="FB"/>:{postText.length}/{platformRules.facebook.maxChars}</p>}
+                            const info = platformInfo[plt];
+                            if (!info) return null; 
+
+                            const isOver = postText.length > info.maxChars;
+                            const counterClass = isOver ? 'overflow' : 'underflow';
+                            return <p key={plt} className={counterClass}>
+                                  <img className="favicon" src={info.icon} alt={info.name}/>:{postText.length}/{info.maxChars}</p>
                         })}
                 </div>
                 <div className="errors">
