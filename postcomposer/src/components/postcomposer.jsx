@@ -5,7 +5,7 @@ import "../assets/PostComposer.css"
 import "../assets/platformInfo"
 import { platformInfo } from "../assets/platformInfo";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-
+// import Draft from "./Draft";
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
     return sum;
@@ -25,16 +25,15 @@ function ValidatePost(text, selectedPlatforms){
         errorArray.push(...EnforceRules(text, platformNumber));
         if(text.length>0 && selectedPlatforms.length>0 && errorArray.length<1){
             errorArray.push("Looks like your post is ready!");
-            console.log(errorArray.length)
+            // console.log(errorArray.length)
     }
     }
     // console.log(typeof(errorArray))
 
     return errorArray;
 }
-function PostComposer(){
-    const [postText, setPostText] = useState('');
-    const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+function PostComposer({postText,setPostText,selectedPlatforms,setSelectedPlatforms}){
+    
     const errorArray = ValidatePost(postText, selectedPlatforms);
     const hasErrors = errorArray.length>0;
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;

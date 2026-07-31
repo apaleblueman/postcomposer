@@ -1,11 +1,25 @@
 import PostComposer from "./components/postcomposer";
-
+import { useState } from "react";
 import "./assets/PostComposer.css"
-function App({}) {
-  
+import Draft from "./components/Draft";
+function App() {
+  const [postText, setPostText] = useState('');
+  const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+  const [drafts, setDraft] = useState([]);
   return (
     <>
-    <PostComposer></PostComposer>
+    <PostComposer
+    postText={postText}
+    setPostText={setPostText}
+    selectedPlatforms={selectedPlatforms}
+    setSelectedPlatforms={setSelectedPlatforms}
+    ></PostComposer>
+    <Draft
+      drafts={drafts}
+      postText={postText}
+      setDraft={setDraft}
+      selectedPlatforms={selectedPlatforms}
+    />
     </>
   )
 }
