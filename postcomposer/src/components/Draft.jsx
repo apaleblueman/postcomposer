@@ -8,9 +8,7 @@ function createDraftObj(postText,selectedPlatforms){
         "platforms":selectedPlatforms.map((plt)=>{
             return platformInfo[plt].icon;
         }),
-        "platformNumber":selectedPlatforms.map((plt)=>{
-            return [plt];
-        }),
+        "platformNums":selectedPlatforms,
         "timestamp":Date.now()
     }
 }
@@ -18,18 +16,20 @@ function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms,setSelect
     return (
         <div>
             <button onClick={()=>{
+                
                 const draftOBJ = createDraftObj(postText,selectedPlatforms);
                 console.log(draftOBJ)
+                if(drafts.includes([draftOBJ.content])){console.log("duplicate draft!")}
                 setDraft(drafts=>[...drafts,draftOBJ]);
+                setPostText('')
+                
                 console.log(drafts)
             }}>saveDraft</button>
             <div className="Drafts">
                 {drafts.map((obj)=>{
-                        
                         const timestampObj = new Date(obj.timestamp);
                         const dateObj = timestampObj.toLocaleString();
-                        return <div className="draftCard"key={obj.id}>
-                            
+                        return <div className="draftCard" key={obj.id}>
                             <div className="platformImages">
                                 <img src={obj.platforms[0]} className={obj.platforms[0]?'':'hidden'}></img>
                                 <img src={obj.platforms[1]} className={obj.platforms[1]?'':'hidden'}></img>
@@ -39,10 +39,10 @@ function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms,setSelect
                             <p className="timestamp">{dateObj}</p>
                             <div className="controls">
                                 <button onClick={()=>{
-                                        console.log("i work!");
-                                        setPostText(obj.content);
-                                        setSelectedPlatforms([...selectedPlatforms,obj.platformNumber])
-                                        console.log(selectedPlatforms);
+                                    setPostText(obj.content);
+                                    
+                                    setDraft(prev => prev.filter(d => d.id !== obj.id));
+                                    console.log(selectedPlatforms);
                                 }}>Edit</button>
                                 <button onClick={()=>{
                                         // console.log("i work!");
