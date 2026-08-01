@@ -17,6 +17,7 @@ function App() {
     <Draft
       drafts={drafts}
       postText={postText}
+      setPostText={setPostText}
       setDraft={setDraft}
       selectedPlatforms={selectedPlatforms}
     />

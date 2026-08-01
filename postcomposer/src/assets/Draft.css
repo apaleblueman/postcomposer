@@ -1,0 +1,64 @@
+.Drafts{
+    display: flex;
+    flex-wrap: wrap;
+    /* border: solid 1px white; */
+    justify-content: center;
+    align-items: flex-start;
+    gap:0.9em;
+    margin-top: 2em;
+}
+
+button{
+    padding: 10px 10px 10px 10px;
+    border: solid 5px #89D2DC;
+    background-color: transparent;
+    border-radius: 20px;
+}
+button:hover{
+    padding: 10px 10px 10px 10px;
+    border: solid 5px #89D2DC;
+    background-color: white;
+    color: #0D1317;
+    border-radius: 20px;
+}
+.draftCard{
+    border: solid 5px #89D2DC;
+    border-radius: 20px;
+    display: flex;
+    gap: 1em;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 300px;
+    height: 350px;
+    padding: 1em;
+}
+p{
+    padding: 1em;
+    overflow:scroll;
+}
+.timestamp{
+    align-self: flex-end;
+    padding: 1em;
+    overflow:scroll;
+    scroll-behavior: smooth;
+}
+.platformImages{
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8em;   
+    width: 100%;
+    /* border: solid 1px white; */
+}
+.platformImages>img{
+    width: 7%;
+    margin-bottom: 1em;
+}
+.hidden{
+    display: none;
+}
+.content{
+    text-align:left;
+    
+    background-color: white;
+    color: #0D1317;
+}
