@@ -25,7 +25,7 @@ function ValidatePost(text, selectedPlatforms){
         errorArray.push(...EnforceRules(text, platformNumber));
         if(text.length>0 && selectedPlatforms.length>0 && errorArray.length<1){
             errorArray.push("Looks like your post is ready!");
-            // console.log(errorArray.length)
+            //console.log(errorArray.length)
     }
     }
     // console.log(typeof(errorArray))
@@ -35,7 +35,7 @@ function ValidatePost(text, selectedPlatforms){
 function PostComposer({postText,setPostText,selectedPlatforms,setSelectedPlatforms}){
     
     const errorArray = ValidatePost(postText, selectedPlatforms);
-    const hasErrors = errorArray.length>0;
+    
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;
     const displayList = errorArray.map((error)=><li>{error}</li>);
 
@@ -76,8 +76,12 @@ function PostComposer({postText,setPostText,selectedPlatforms,setSelectedPlatfor
                 </div>
                 <div className="userPost">
                         <textarea rows="7" cols="50" value={postText} 
-                        onChange={(e)=> setPostText(e.target.value)} 
-                        className={hasErrors && postText.length >= 0 ? 'has-error':'ready'}>
+                        onChange={
+                            (e)=> {setPostText(e.target.value);
+                            console.log(postText.length>0 && isReady)}
+
+                        } 
+                        className={(isReady && postText.length>=0) ? 'ready':'has-error'}>
                         
                         </textarea>
                         <CopyToClipboard text={postText}>

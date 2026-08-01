@@ -8,10 +8,13 @@ function createDraftObj(postText,selectedPlatforms){
         "platforms":selectedPlatforms.map((plt)=>{
             return platformInfo[plt].icon;
         }),
+        "platformNumber":selectedPlatforms.map((plt)=>{
+            return [plt];
+        }),
         "timestamp":Date.now()
     }
 }
-function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms}){
+function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms,setSelectedPlatforms}){
     return (
         <div>
             <button onClick={()=>{
@@ -36,9 +39,15 @@ function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms}){
                             <p className="timestamp">{dateObj}</p>
                             <div className="controls">
                                 <button onClick={()=>{
-                                        setPostText(obj.content)
+                                        console.log("i work!");
+                                        setPostText(obj.content);
+                                        setSelectedPlatforms([...selectedPlatforms,obj.platformNumber])
+                                        console.log(selectedPlatforms);
                                 }}>Edit</button>
-                                <button>Delete</button>
+                                <button onClick={()=>{
+                                        // console.log("i work!");
+                                        setDraft(prev => prev.filter(d => d.id !== obj.id));
+                                }}>Delete</button>
                                 <CopyToClipboard text={obj.content}>
                                 <button type="button">Copy to clipboard</button>
                                 </CopyToClipboard>

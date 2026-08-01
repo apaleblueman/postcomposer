@@ -20,6 +20,8 @@ function App() {
       setPostText={setPostText}
       setDraft={setDraft}
       selectedPlatforms={selectedPlatforms}
+      setSelectedPlatforms={setSelectedPlatforms}
+
     />
     </>
   )
