@@ -1,7 +1,12 @@
 import { platformInfo } from "../assets/platformInfo";
 import "../assets/Draft.css"
 import CopyToClipboard from "react-copy-to-clipboard";
+import {useSelector, useDispatch} from 'react-redux';
+import { addDraft,deleteDraft } from "../store/draftsSlice";
+import { setPostText,clearPost} from "../store/postsSlice";
+
 function createDraftObj(postText,selectedPlatforms){
+     
     return {
         "id":crypto.randomUUID(),
         "content":postText,
@@ -12,18 +17,21 @@ function createDraftObj(postText,selectedPlatforms){
         "timestamp":Date.now()
     }
 }
-function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms,setSelectedPlatforms}){
+//old props:{drafts,setDraft,postText,setPostText,selectedPlatforms,setSelectedPlatforms}
+function Draft(){
+    const dispatch = useDispatch();
+    const drafts = useSelector((state)=>state.drafts.drafts)
+    const postText = useSelector((state)=>state.posts.postText)
+    const selectedPlatforms = useSelector((state)=>state.posts.selectedPlatforms)
     return (
         <div>
             <button onClick={()=>{
-                
                 const draftOBJ = createDraftObj(postText,selectedPlatforms);
                 console.log(draftOBJ)
                 if(drafts.includes([draftOBJ.content])){console.log("duplicate draft!")}
-                setDraft(drafts=>[...drafts,draftOBJ]);
-                setPostText('')
-                
-                console.log(drafts)
+                dispatch(addDraft(draftOBJ));
+                dispatch(clearPost());
+                console.log(drafts);
             }}>saveDraft</button>
             <div className="Drafts">
                 {drafts.map((obj)=>{
@@ -39,14 +47,13 @@ function Draft({drafts,setDraft,postText,setPostText,selectedPlatforms,setSelect
                             <p className="timestamp">{dateObj}</p>
                             <div className="controls">
                                 <button onClick={()=>{
-                                    setPostText(obj.content);
-                                    
-                                    setDraft(prev => prev.filter(d => d.id !== obj.id));
+                                    dispatch(setPostText(obj.content));
+                                    dispatch(deleteDraft(obj.id));
                                     console.log(selectedPlatforms);
                                 }}>Edit</button>
                                 <button onClick={()=>{
                                         // console.log("i work!");
-                                        setDraft(prev => prev.filter(d => d.id !== obj.id));
+                                        dispatch(deleteDraft(obj.id));
                                 }}>Delete</button>
                                 <CopyToClipboard text={obj.content}>
                                 <button type="button">Copy to clipboard</button>

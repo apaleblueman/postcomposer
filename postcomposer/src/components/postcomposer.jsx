@@ -5,6 +5,11 @@ import "../assets/PostComposer.css"
 import "../assets/platformInfo"
 import { platformInfo } from "../assets/platformInfo";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+//redux imports
+import {useSelector, useDispatch} from 'react-redux';
+import { setPostText,setSelectedPlatforms } from "../store/postsSlice";
+
+
 // import Draft from "./Draft";
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
@@ -32,8 +37,13 @@ function ValidatePost(text, selectedPlatforms){
 
     return errorArray;
 }
-function PostComposer({postText,setPostText,selectedPlatforms,setSelectedPlatforms}){
-    
+//old props:{postText,setPostText,selectedPlatforms,setSelectedPlatforms}
+function PostComposer(){
+    //dispatch method
+    const dispatch = useDispatch();
+    //reading data from store
+    const postText = useSelector((state)=> state.posts.postText);
+    const selectedPlatforms = useSelector((state) => state.posts.selectedPlatforms);    
     const errorArray = ValidatePost(postText, selectedPlatforms);
     
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;
@@ -52,33 +62,34 @@ function PostComposer({postText,setPostText,selectedPlatforms,setSelectedPlatfor
                     <div><label><img className="favicon" src={platformInfo[1].icon}/></label>
                     <input type="checkbox" id="twitter" name="1" onChange={(e)=>{
                         if(e.target.checked){
-                            setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)])
+                            dispatch(setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)]))
                         }else{
-                            setSelectedPlatforms(selectedPlatforms.filter((selectedPlatform)=>selectedPlatform!=Number(e.target.name)))
+                            dispatch(setSelectedPlatforms(selectedPlatforms.filter((selectedPlatform)=>selectedPlatform!=Number(e.target.name))))
                         }
                         }}></input></div>
                     <div><label><img className="favicon" src={platformInfo[3].icon}/></label>
                     <input type="checkbox" id="instagram" name="3" onChange={(e)=>{
                         if(e.target.checked){
-                            setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)])
+                            dispatch(setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)]))
                         }else{
-                            setSelectedPlatforms(selectedPlatforms.filter((selectedPlatform)=>selectedPlatform!=Number(e.target.name)))
+                            dispatch(setSelectedPlatforms(selectedPlatforms.filter((selectedPlatform)=>selectedPlatform!=Number(e.target.name))))
                         }
                         }}></input></div>
                     <div><label><img className="favicon" src={platformInfo[5].icon}/></label>
                     <input type="checkbox" id="Facebook" name="5" onChange={(e)=>{
                         if(e.target.checked){
-                            setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)])
+                            dispatch(setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)]))
                         }else{
-                            setSelectedPlatforms(selectedPlatforms.filter((selectedPlatform)=>selectedPlatform!=Number(e.target.name)))
+                            dispatch(setSelectedPlatforms(selectedPlatforms.filter((selectedPlatform)=>selectedPlatform!=Number(e.target.name))))
                         }
                         }}></input></div>
                 </div>
                 <div className="userPost">
                         <textarea rows="7" cols="50" value={postText} 
                         onChange={
-                            (e)=> {setPostText(e.target.value);
-                            console.log(postText.length>0 && isReady)}
+                            (e)=> {dispatch(setPostText(e.target.value));
+                                // console.log(postText.length>0 && isReady)
+                            }
 
                         } 
                         className={(isReady && postText.length>=0) ? 'ready':'has-error'}>

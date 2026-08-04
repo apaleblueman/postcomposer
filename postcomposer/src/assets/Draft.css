@@ -1,6 +1,7 @@
 .Drafts{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row-reverse;
     /* border: solid 1px white; */
     justify-content: center;
     align-items: flex-start;
