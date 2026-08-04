@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit"
 import postsrReducer from "./postsSlice"
 import draftsReducer from "./draftsSlice"
+import platformsReducer from "./platformsSlice"
 export const store=configureStore({
     reducer:{
-        post:postsrReducer,
-        draft:draftsReducer
+        posts:postsrReducer,
+        drafts:draftsReducer,
+        platforms:platformsReducer
     }
 })
