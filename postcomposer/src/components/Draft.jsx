@@ -65,5 +65,4 @@ function Draft(){
         </div>
     )
   }
-
   export default Draft;

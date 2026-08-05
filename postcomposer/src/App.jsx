@@ -1,29 +1,17 @@
 import PostComposer from "./components/postcomposer";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { useSelector,useDispatch} from "react-redux";
+import { setDrafts } from "./store/draftsSlice";
 import "./assets/PostComposer.css";
 import Draft from "./components/Draft";
 
 function App() {
-  
-  // const [drafts, setDraft] = useState(() => {
-  //   const saved = localStorage.getItem("drafts");
-  //   if (saved) {
-  //     try {
-  //       return JSON.parse(saved);
-  //     } catch (e) {
-  //       console.error("Failed to parse drafts:", e);
-  //       return [];
-  //     }
-  //   }
-  //   return []; 
-  // });
+  const dispatch = useDispatch();
+  const drafts = useSelector((state)=>state.drafts.drafts)
 
-  // const [postText, setPostText] = useState('');
-  // const [selectedPlatforms, setSelectedPlatforms] = useState([]);
-
-  // useEffect(() => {
-  //   localStorage.setItem("drafts", JSON.stringify(drafts));
-  // }, [drafts]);
+  useEffect(() => {
+    localStorage.setItem("drafts", JSON.stringify(drafts));
+  },[drafts]);
 
   return (
     <>

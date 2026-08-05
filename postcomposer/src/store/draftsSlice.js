@@ -1,7 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const loadSavedDrafts = (()=>{
+    const saved = localStorage.getItem("drafts");
+    if(saved){
+        try{
+            return JSON.parse(saved)
+        }catch(e){
+            console.error("failed to load drafts:",e);
+            return [];
+        }
+    }
+    return [];
+});
 const initialState={
-    drafts : []
+    drafts : loadSavedDrafts()
 }
 const draftsSlice = createSlice({
     name:"draftsContent",
