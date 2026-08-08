@@ -22,3 +22,7 @@ const postsSlice = createSlice({
 
 export const {setPostText,setSelectedPlatforms,clearPost} = postsSlice.actions;
 export default postsSlice.reducer;
+
+//basic selectors
+export const selectCurrentPost = (state)=>state.posts.postText;
+export const selectSelectedPlatforms = (state)=>state.posts.selectedPlatforms;

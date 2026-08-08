@@ -2,9 +2,10 @@ import { platformInfo } from "../assets/platformInfo";
 import "../assets/Draft.css"
 import CopyToClipboard from "react-copy-to-clipboard";
 import {useSelector, useDispatch} from 'react-redux';
-import { addDraft,deleteDraft } from "../store/draftsSlice";
+import { addDraft,deleteDraft,clearDrafts,selectDraftCount} from "../store/draftsSlice";
 import { setPostText,clearPost} from "../store/postsSlice";
-
+import { selectAllDrafts } from "../store/draftsSlice";
+import { selectCurrentPost,selectSelectedPlatforms} from "../store/postsSlice";
 function createDraftObj(postText,selectedPlatforms){
      
     return {
@@ -20,11 +21,14 @@ function createDraftObj(postText,selectedPlatforms){
 //old props:{drafts,setDraft,postText,setPostText,selectedPlatforms,setSelectedPlatforms}
 function Draft(){
     const dispatch = useDispatch();
-    const drafts = useSelector((state)=>state.drafts.drafts)
-    const postText = useSelector((state)=>state.posts.postText)
-    const selectedPlatforms = useSelector((state)=>state.posts.selectedPlatforms)
+    const drafts = useSelector(selectAllDrafts);
+    const postText = useSelector(selectCurrentPost);
+    const selectedPlatforms = useSelector(selectSelectedPlatforms);  
+    const draftsCount = useSelector(selectDraftCount);  
     return (
+        
         <div>
+            <div>Total Drafts: {draftsCount}</div>
             <button onClick={()=>{
                 const draftOBJ = createDraftObj(postText,selectedPlatforms);
                 console.log(draftOBJ)
@@ -32,7 +36,11 @@ function Draft(){
                 dispatch(addDraft(draftOBJ));
                 dispatch(clearPost());
                 console.log(drafts);
-            }}>saveDraft</button>
+            }}>save as draft</button>
+            <button onClick={()=>{
+                dispatch(clearDrafts());
+            }}>clear drafts</button>
+            
             <div className="Drafts">
                 {drafts.map((obj)=>{
                         const timestampObj = new Date(obj.timestamp);

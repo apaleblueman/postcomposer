@@ -8,7 +8,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 //redux imports
 import {useSelector, useDispatch} from 'react-redux';
 import { setPostText,setSelectedPlatforms } from "../store/postsSlice";
-
+import { selectCurrentPost, selectSelectedPlatforms } from "../store/postsSlice";
 
 // import Draft from "./Draft";
 function DeterminePlatform(selectedPlatforms){
@@ -42,8 +42,8 @@ function PostComposer(){
     //dispatch method
     const dispatch = useDispatch();
     //reading data from store
-    const postText = useSelector((state)=> state.posts.postText);
-    const selectedPlatforms = useSelector((state) => state.posts.selectedPlatforms);    
+    const postText = useSelector(selectCurrentPost);
+    const selectedPlatforms = useSelector(selectSelectedPlatforms);    
     const errorArray = ValidatePost(postText, selectedPlatforms);
     
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;

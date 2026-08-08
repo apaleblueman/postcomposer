@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const loadSavedDrafts = (()=>{
     const saved = localStorage.getItem("drafts");
@@ -27,9 +27,39 @@ const draftsSlice = createSlice({
         },
         deleteDraft(state,action){
             state.drafts = state.drafts.filter((dobj)=>dobj.id!=action.payload);
+        },
+        clearDrafts(state){
+            state.drafts = []; 
         }
     }
 })
 
-export const {setDrafts,addDraft,deleteDraft} = draftsSlice.actions;
+export const {setDrafts,addDraft,clearDrafts,deleteDraft} = draftsSlice.actions;
 export default draftsSlice.reducer;
+//basic selectors
+export const selectAllDrafts = (state)=> state.drafts.drafts;
+//memoized selectors
+export const selectDraftCount = createSelector(
+    [selectAllDrafts],
+    (returnedDraftArray)=> returnedDraftArray.length
+)
+
+export const selectDraftsByPlatform = createSelector(
+    [
+        selectAllDrafts,
+        (state, platformID)=>platformID
+    ],
+    (drafts, platformID)=>{
+        return drafts.filter(draft => draft.platformNums.includes(platformID))
+    }
+)
+
+export const selectDraftsByUID = createSelector(
+    [
+        selectAllDrafts,
+        (state, UID)=>UID
+    ],
+    (drafts, UID)=>{
+        return drafts.find(draft => draft.id === UID);
+    }
+)

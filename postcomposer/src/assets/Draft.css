@@ -1,10 +1,10 @@
 .Drafts{
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row-reverse;
+    flex-wrap:wrap-reverse;
+    flex-direction:row-reverse;
     /* border: solid 1px white; */
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap:0.9em;
     margin-top: 2em;
 }
