@@ -47,10 +47,12 @@ export const selectDraftCount = createSelector(
 export const selectDraftsByPlatform = createSelector(
     [
         selectAllDrafts,
-        (state, platformID)=>platformID
+        (state, filterArray)=>filterArray
     ],
-    (drafts, platformID)=>{
-        return drafts.filter(draft => draft.platformNums.includes(platformID))
+    (drafts, filterArray)=>{
+        return drafts.filter((draft)=>{
+            return draft.platformNums.some(num=>filterArray.includes(num));
+        })
     }
 )
 

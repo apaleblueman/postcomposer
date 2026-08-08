@@ -60,7 +60,7 @@ function PostComposer(){
             <form>
                 <div className="platforms">
                     <div><label><img className="favicon" src={platformInfo[1].icon}/></label>
-                    <input type="checkbox" id="twitter" name="1" onChange={(e)=>{
+                    <input type="checkbox" id="twitter" className="checkbox" name="1" onChange={(e)=>{
                         if(e.target.checked){
                             dispatch(setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)]))
                         }else{
@@ -68,7 +68,7 @@ function PostComposer(){
                         }
                         }}></input></div>
                     <div><label><img className="favicon" src={platformInfo[3].icon}/></label>
-                    <input type="checkbox" id="instagram" name="3" onChange={(e)=>{
+                    <input type="checkbox" id="instagram" className="checkbox" name="3" onChange={(e)=>{
                         if(e.target.checked){
                             dispatch(setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)]))
                         }else{
@@ -76,7 +76,7 @@ function PostComposer(){
                         }
                         }}></input></div>
                     <div><label><img className="favicon" src={platformInfo[5].icon}/></label>
-                    <input type="checkbox" id="Facebook" name="5" onChange={(e)=>{
+                    <input type="checkbox" id="Facebook" className="checkbox" name="5" onChange={(e)=>{
                         if(e.target.checked){
                             dispatch(setSelectedPlatforms([...selectedPlatforms, Number(e.target.name)]))
                         }else{
