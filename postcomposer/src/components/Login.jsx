@@ -1,16 +1,17 @@
 import { useState } from "react";
 function Login({setIsLoggedIn}) {
     const [username, setUserName] = useState('');
+    const [error, setError] = useState('');
     function handleUsername(e){
         const uname = e.target.value;
         setUserName(uname);
-        console.log(username);
+        // console.log(username);
     }
     const [password, setPassword] = useState('');
     function handlePassword(e){
         const pass = e.target.value;
         setPassword(pass);
-        console.log(password);
+        // console.log(password);
     }
     function handleLogin(e){
         e.preventDefault();
@@ -19,9 +20,10 @@ function Login({setIsLoggedIn}) {
             console.log("welcome admin!");
             localStorage.setItem("jwtToken",mockToken);
             setIsLoggedIn(true);
+            setError('');
         }else{
-            
             console.log("sorry u are not admin!");
+            setError('Invalid username or password!');
         }
     }
     return (
@@ -50,6 +52,7 @@ function Login({setIsLoggedIn}) {
                 <button>
                 Login
                 </button>
+                <div>{error}</div>
             </form>
         </div>
     );
