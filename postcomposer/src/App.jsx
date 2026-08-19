@@ -4,6 +4,7 @@ import { useSelector,useDispatch} from "react-redux";
 import { setDrafts } from "./store/draftsSlice";
 import "./assets/PostComposer.css";
 import Draft from "./components/Draft";
+import Login from "./components/Login";
 
 function App() {
   const dispatch = useDispatch();
@@ -13,23 +14,13 @@ function App() {
     localStorage.setItem("drafts", JSON.stringify(drafts));
   },[drafts]);
 
-  return (
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+     return (
+    isLoggedIn ?
     <>
-      <PostComposer
-        // postText={postText}
-        // setPostText={setPostText}
-        // selectedPlatforms={selectedPlatforms}
-        // setSelectedPlatforms={setSelectedPlatforms}
-      />
-      <Draft
-        // drafts={drafts}
-        // setDraft={setDraft}
-        // postText={postText}
-        // setPostText={setPostText}
-        // selectedPlatforms={selectedPlatforms}
-        // setSelectedPlatforms={setSelectedPlatforms}
-      />
-    </>
+    <PostComposer/>
+    <Draft/>
+    </>:<Login/>
   );
 }
 
