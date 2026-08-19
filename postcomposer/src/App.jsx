@@ -7,6 +7,12 @@ import Draft from "./components/Draft";
 import Login from "./components/Login";
 
 function App() {
+
+  useEffect(() => {
+    if(localStorage.getItem("jwtToken") !== null){
+      setIsLoggedIn(true);
+    }
+  },[]);
   const dispatch = useDispatch();
   const drafts = useSelector((state)=>state.drafts.drafts)
 
@@ -14,13 +20,17 @@ function App() {
     localStorage.setItem("drafts", JSON.stringify(drafts));
   },[drafts]);
 
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
      return (
     isLoggedIn ?
     <>
-    <PostComposer/>
+    <PostComposer
+    setIsLoggedIn={setIsLoggedIn}
+    />
     <Draft/>
     </>:<Login
+    setIsLoggedIn={setIsLoggedIn}
     />
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-function Login() {
+function Login({setIsLoggedIn}) {
     const [username, setUserName] = useState('');
     function handleUsername(e){
         const uname = e.target.value;
@@ -15,8 +15,12 @@ function Login() {
     function handleLogin(e){
         e.preventDefault();
         if(username === "admin" && password === "password123"){
+            const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fake.signature";
             console.log("welcome admin!");
+            localStorage.setItem("jwtToken",mockToken);
+            setIsLoggedIn(true);
         }else{
+            
             console.log("sorry u are not admin!");
         }
     }

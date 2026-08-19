@@ -10,6 +10,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { setPostText,setSelectedPlatforms } from "../store/postsSlice";
 import { selectCurrentPost, selectSelectedPlatforms } from "../store/postsSlice";
 
+
 // import Draft from "./Draft";
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
@@ -38,7 +39,8 @@ function ValidatePost(text, selectedPlatforms){
     return errorArray;
 }
 //old props:{postText,setPostText,selectedPlatforms,setSelectedPlatforms}
-function PostComposer(){
+
+function PostComposer({setIsLoggedIn}){
     //dispatch method
     const dispatch = useDispatch();
     //reading data from store
@@ -48,13 +50,19 @@ function PostComposer(){
     
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;
     const displayList = errorArray.map((error)=><li>{error}</li>);
-
+    
     // console.log(foundErrors);
     return(
         <div>
             <div className="heading">
             <h1>PostComposer</h1>
-            <a className="link" href="https://github.com/apaleblueman/postcomposer">source code</a>
+            <div className="heading-right">
+                <a className="link" href="https://github.com/apaleblueman/postcomposer">source code</a>
+                <button onClick={()=>{
+                        localStorage.removeItem("jwtToken");
+                        setIsLoggedIn(false);
+                }}>Logout</button>
+            </div>
             </div>
             <p className="userchoice">Choose social media platform where u wish to post:</p>
             <form>
@@ -90,7 +98,6 @@ function PostComposer(){
                             (e)=> {dispatch(setPostText(e.target.value));
                                 // console.log(postText.length>0 && isReady)
                             }
-
                         } 
                         className={(isReady && postText.length>=0) ? 'ready':'has-error'}>
                         
