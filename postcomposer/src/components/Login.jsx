@@ -1,6 +1,4 @@
 import { useState } from "react";
-
-
 function Login() {
     const [username, setUserName] = useState('');
     function handleUsername(e){
@@ -14,18 +12,40 @@ function Login() {
         setPassword(pass);
         console.log(password);
     }
+    function handleLogin(e){
+        e.preventDefault();
+        if(username === "admin" && password === "password123"){
+            console.log("welcome admin!");
+        }else{
+            console.log("sorry u are not admin!");
+        }
+    }
     return (
         <div>
-            <form>
+            <form onSubmit={handleLogin}>
                 <div>
                     <label htmlFor="username">username:</label>
-                    <input name="username" type="text" onChange={handleUsername} id="username" value={username}></input>
+                    <input 
+                    name="username"
+                    type="text"
+                    onChange={handleUsername}
+                    id="username"
+                    value={username}
+                    ></input>
                 </div>
                 <div>
                     <label htmlFor="password">password:</label>
-                    <input name="password" type="password" onChange={handlePassword} id="password" value={password}></input>
+                    <input 
+                    name="password"
+                    type="password"
+                    onChange={handlePassword} 
+                    id="password"
+                    value={password}
+                    ></input>
                 </div>
-                <button>Login</button>
+                <button>
+                Login
+                </button>
             </form>
         </div>
     );

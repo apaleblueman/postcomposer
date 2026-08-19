@@ -20,7 +20,8 @@ function App() {
     <>
     <PostComposer/>
     <Draft/>
-    </>:<Login/>
+    </>:<Login
+    />
   );
 }
 
