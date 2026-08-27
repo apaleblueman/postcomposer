@@ -16,12 +16,20 @@ function Login({setIsLoggedIn}) {
     function handleLogin(e){
         e.preventDefault();
         if(username === "admin" && password === "password123"){
-            const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fake.signature";
+            const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIn0=.fakesignature";
             console.log("welcome admin!");
             localStorage.setItem("jwtToken",mockToken);
             setIsLoggedIn(true);
             setError('');
-        }else{
+        }
+        // else if(password==="letmein"){
+        //     const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIn0=.fakesignature";
+        //     console.log("welcome user");
+        //     localStorage.setItem("jwtToken",mockToken);
+        //     setIsLoggedIn(true);
+        //     setError('');
+        // }
+        else{
             console.log("sorry u are not admin!");
             setError('Invalid username or password!');
         }

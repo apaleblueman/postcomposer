@@ -40,17 +40,21 @@ function ValidatePost(text, selectedPlatforms){
 }
 //attaching tokens to requests
 function simulatePublish() {
-
     const currentToken = localStorage.getItem("jwtToken");
-
-
     const simulatedHeaders = {
         "Authorization": `Bearer ${currentToken}`
     };
-
     console.log("Ready to send to server with headers:", simulatedHeaders);
 }
-
+//decode jwt token stored in localStorage
+function decodeToken(){
+    const currentToken = localStorage.getItem("jwtToken");
+    const splitToken = currentToken.split(".");
+    const base64string = atob(splitToken[1]);
+    const JSONstring = JSON.parse(base64string);
+    console.log(JSONstring['username']);
+    
+}
 function PostComposer({setIsLoggedIn}){
     //dispatch method
     const dispatch = useDispatch();
@@ -62,6 +66,9 @@ function PostComposer({setIsLoggedIn}){
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;
     const displayList = errorArray.map((error)=><li>{error}</li>);
     
+    const loggedInUser = atob(localStorage.getItem("jwtToken").split(".")[1]);
+    const usernameParsed = JSON.parse(loggedInUser);
+
     // console.log(foundErrors);
     return(
         <div>
@@ -69,6 +76,7 @@ function PostComposer({setIsLoggedIn}){
             <h1>PostComposer</h1>
             <div className="heading-right">
                 <a className="link" href="https://github.com/apaleblueman/postcomposer">source code</a>
+                <p>{usernameParsed['username']}</p>
                 <button onClick={()=>{
                         localStorage.removeItem("jwtToken");
                         setIsLoggedIn(false);
@@ -135,9 +143,9 @@ function PostComposer({setIsLoggedIn}){
                 </div>
             </form>
             <button onClick={simulatePublish}>Test Publish</button>
+            <button onClick={decodeToken}>Test Token</button>
         </div>
     )
-
 }
 
 export default PostComposer;
