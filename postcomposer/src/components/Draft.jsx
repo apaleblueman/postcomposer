@@ -20,7 +20,6 @@ return {
     "timestamp":Date.now()
 }
 }
-//old props:{drafts,setDraft,postText,setPostText,selectedPlatforms,setSelectedPlatforms}
 function Draft(){
 const dispatch = useDispatch();
 

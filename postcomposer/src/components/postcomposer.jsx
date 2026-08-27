@@ -38,7 +38,18 @@ function ValidatePost(text, selectedPlatforms){
 
     return errorArray;
 }
-//old props:{postText,setPostText,selectedPlatforms,setSelectedPlatforms}
+//attaching tokens to requests
+function simulatePublish() {
+
+    const currentToken = localStorage.getItem("jwtToken");
+
+
+    const simulatedHeaders = {
+        "Authorization": `Bearer ${currentToken}`
+    };
+
+    console.log("Ready to send to server with headers:", simulatedHeaders);
+}
 
 function PostComposer({setIsLoggedIn}){
     //dispatch method
@@ -123,8 +134,10 @@ function PostComposer({setIsLoggedIn}){
                     <ul>{displayList}</ul>
                 </div>
             </form>
+            <button onClick={simulatePublish}>Test Publish</button>
         </div>
     )
+
 }
 
 export default PostComposer;
