@@ -1,5 +1,9 @@
 import { useState } from "react";
-function Login({setIsLoggedIn}) {
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
+
+function Login() {
+    const dispatch = useDispatch();
     const [username, setUserName] = useState('');
     const [error, setError] = useState('');
     function handleUsername(e){
@@ -40,7 +44,10 @@ function Login({setIsLoggedIn}) {
         const mockToken = header+"."+payload+"."+signature;
         console.log("welcome " + role);
         localStorage.setItem("jwtToken",mockToken);
-        setIsLoggedIn(true);
+        dispatch(login({
+            role: role,
+            token: mockToken
+        }));
         setError('');
         }else{
             setError("invalid role");

@@ -25,7 +25,7 @@ const dispatch = useDispatch();
 
 const postText = useSelector(selectCurrentPost);
 const selectedPlatforms = useSelector(selectSelectedPlatforms);  
-
+const role = useSelector((state)=>state.auth.role);  
 const [filter, setFilter] = useState([]);
 const drafts = useSelector((state)=>{
     if(filter.length<1){
@@ -41,7 +41,8 @@ const draftsCount = useSelector(selectDraftCount);
 return (
     <div>
         <div>Total Drafts: {draftsCount}</div>
-        <button onClick={()=>{
+        {role !=="Viewer" && (<>
+                <button onClick={()=>{
             const draftOBJ = createDraftObj(postText,selectedPlatforms);
             console.log(draftOBJ)
             if(drafts.includes([draftOBJ.content])){console.log("duplicate draft!")}
@@ -56,6 +57,8 @@ return (
         <button onClick={()=>{
             dispatch(clearDrafts());
         }}>Clear drafts</button>
+        </>    
+        )}
         <div className="filters">Filter:
             <div className="platforms">
             <div><label><img className="favicon" src={platformInfo[1].icon}/></label>
@@ -97,6 +100,7 @@ const DraftCard = memo(function DraftCard({obj, selectedPlatforms}){
     const dispatch = useDispatch();
     const timestampObj = new Date(obj.timestamp);
     const dateObj = timestampObj.toLocaleString();
+    const role = useSelector((state)=>state.auth.role);  
     return(
         <div className="draftCard">
         <div className="platformImages">
@@ -106,20 +110,23 @@ const DraftCard = memo(function DraftCard({obj, selectedPlatforms}){
         </div>
         <p className="content">{obj.content}</p>
         <p className="timestamp">{dateObj}</p>
-        <div className="controls">
-        <button onClick={()=>{
-        dispatch(setPostText(obj.content));
-        dispatch(deleteDraft(obj.id));
-        console.log(selectedPlatforms);
-        }}>Edit</button>
-        <button onClick={()=>{
-        // console.log("i work!");
-        dispatch(deleteDraft(obj.id));
-        }}>Delete</button>
+        {role !== "Viewer" && (
+            <div className="controls">
+            <button onClick={()=>{
+            dispatch(setPostText(obj.content));
+            dispatch(deleteDraft(obj.id));
+            console.log(selectedPlatforms);
+            }}>Edit</button>
+            <button onClick={()=>{
+            // console.log("i work!");
+            dispatch(deleteDraft(obj.id));
+            }}>Delete</button>
+            
+            </div>
+        )}
         <CopyToClipboard text={obj.content}>
-        <button type="button">Copy to clipboard</button>
-        </CopyToClipboard>
-        </div>
+            <button type="button">Copy to clipboard</button>
+            </CopyToClipboard>
         </div>
     )
 })

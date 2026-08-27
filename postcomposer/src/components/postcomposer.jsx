@@ -9,7 +9,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {useSelector, useDispatch} from 'react-redux';
 import { setPostText,setSelectedPlatforms } from "../store/postsSlice";
 import { selectCurrentPost, selectSelectedPlatforms } from "../store/postsSlice";
-
+import { logout } from "../store/authSlice";
 
 // import Draft from "./Draft";
 function DeterminePlatform(selectedPlatforms){
@@ -46,16 +46,7 @@ function simulatePublish() {
     };
     console.log("Ready to send to server with headers:", simulatedHeaders);
 }
-//decode jwt token stored in localStorage
-function decodeToken(){
-    const currentToken = localStorage.getItem("jwtToken");
-    if(currentToken!== null){
-        const splitToken = currentToken.split(".");
-        const base64string = atob(splitToken[1]);
-        const JSONstring = JSON.parse(base64string);
-        console.log(JSONstring['username']);
-    }
-}
+
 function PostComposer({setIsLoggedIn}){
     //dispatch method
     const dispatch = useDispatch();
@@ -67,19 +58,12 @@ function PostComposer({setIsLoggedIn}){
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;
     const displayList = errorArray.map((error)=><li>{error}</li>);
     
-    const rawToken = localStorage.getItem("jwtToken");
-    let displayName = "Guest";
-    if(rawToken){
-        try{
-            const payload = JSON.parse(atob(rawToken.split(".")[1]));
-            displayName = payload.username;
-        }catch(error){
-            console.log("Failed to decode token", error);
-        }
-    }
+    // const rawToken = localStorage.getItem("jwtToken");
+    let displayName = useSelector((state)=> state.auth.role);
     
     // console.log(foundErrors);
     return(
+        
         <div>
             <div className="heading">
             <h1>PostComposer</h1>
@@ -88,10 +72,11 @@ function PostComposer({setIsLoggedIn}){
                 <p>{displayName}</p>
                 <button onClick={()=>{
                         localStorage.removeItem("jwtToken");
-                        setIsLoggedIn(false);
+                        dispatch(logout());
                 }}>Logout</button>
             </div>
             </div>
+            {displayName !== "Viewer" && (<>
             <p className="userchoice">Choose social media platform where u wish to post:</p>
             <form>
                 <div className="platforms">
@@ -151,8 +136,11 @@ function PostComposer({setIsLoggedIn}){
                     <ul>{displayList}</ul>
                 </div>
             </form>
-            <button onClick={simulatePublish}>Test Publish</button>
-            <button onClick={decodeToken}>Test Token</button>
+            {displayName !=="Editor" &&(
+                <button onClick={simulatePublish}>Test Publish</button>
+            )}
+            
+            </>)}
         </div>
     )
 }

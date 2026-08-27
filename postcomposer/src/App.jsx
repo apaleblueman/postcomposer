@@ -5,12 +5,16 @@ import { setDrafts } from "./store/draftsSlice";
 import "./assets/PostComposer.css";
 import Draft from "./components/Draft";
 import Login from "./components/Login";
-
+import { login } from "./store/authSlice";
 function App() {
 
   useEffect(() => {
     if(localStorage.getItem("jwtToken") !== null){
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
+      const rawToken = localStorage.getItem("jwtToken");
+      const splitToken = atob(rawToken.split(".")[1]);
+      const tokenOBJ = JSON.parse(splitToken);
+      dispatch(login({role:tokenOBJ.role,token:rawToken}))
     }
   },[]);
   const dispatch = useDispatch();
@@ -21,17 +25,15 @@ function App() {
   },[drafts]);
 
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
+  
      return (
     isLoggedIn ?
     <>
-    <PostComposer
-    setIsLoggedIn={setIsLoggedIn}
-    />
+    <PostComposer/>
     <Draft/>
-    </>:<Login
-    setIsLoggedIn={setIsLoggedIn}
-    />
+    </>:<Login/>
   );
 }
 
