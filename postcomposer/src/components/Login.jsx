@@ -11,27 +11,39 @@ function Login({setIsLoggedIn}) {
     function handlePassword(e){
         const pass = e.target.value;
         setPassword(pass);
-        // console.log(password);
+        // console.log(password);in
     }
     function handleLogin(e){
         e.preventDefault();
-        if(username === "admin" && password === "password123"){
-            const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIn0=.fakesignature";
-            console.log("welcome admin!");
-            localStorage.setItem("jwtToken",mockToken);
-            setIsLoggedIn(true);
-            setError('');
+        let role;
+        if(username === "Admin" && password === "password123"){
+            role = "Admin";   
         }
-        // else if(password==="letmein"){
-        //     const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIn0=.fakesignature";
-        //     console.log("welcome user");
-        //     localStorage.setItem("jwtToken",mockToken);
-        //     setIsLoggedIn(true);
-        //     setError('');
-        // }
+        else if(username === "Editor" && password === "password123"){
+            role = "Editor";
+        }
+        else if(username === "Viewer" && password === "password123"){
+            role = "Viewer";
+        }
         else{
-            console.log("sorry u are not admin!");
+            console.log("sorry u are not authenticated!");
             setError('Invalid username or password!');
+            role = undefined;
+        }
+        if(role !== undefined){
+        const header=btoa(JSON.stringify({"alg":"HS256","typ":"JWT"}));
+        const payload = btoa(JSON.stringify({
+        "username":username,
+        "role":role
+        }));
+        const signature = "fakesignature"
+        const mockToken = header+"."+payload+"."+signature;
+        console.log("welcome " + role);
+        localStorage.setItem("jwtToken",mockToken);
+        setIsLoggedIn(true);
+        setError('');
+        }else{
+            setError("invalid role");
         }
     }
     return (
