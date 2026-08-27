@@ -49,11 +49,12 @@ function simulatePublish() {
 //decode jwt token stored in localStorage
 function decodeToken(){
     const currentToken = localStorage.getItem("jwtToken");
-    const splitToken = currentToken.split(".");
-    const base64string = atob(splitToken[1]);
-    const JSONstring = JSON.parse(base64string);
-    console.log(JSONstring['username']);
-    
+    if(currentToken!== null){
+        const splitToken = currentToken.split(".");
+        const base64string = atob(splitToken[1]);
+        const JSONstring = JSON.parse(base64string);
+        console.log(JSONstring['username']);
+    }
 }
 function PostComposer({setIsLoggedIn}){
     //dispatch method
@@ -66,9 +67,17 @@ function PostComposer({setIsLoggedIn}){
     const isReady = postText.length>=0 && errorArray.includes("Looks like your post is ready!") ;
     const displayList = errorArray.map((error)=><li>{error}</li>);
     
-    const loggedInUser = atob(localStorage.getItem("jwtToken").split(".")[1]);
-    const usernameParsed = JSON.parse(loggedInUser);
-
+    const rawToken = localStorage.getItem("jwtToken");
+    let displayName = "Guest";
+    if(rawToken){
+        try{
+            const payload = JSON.parse(atob(rawToken.split(".")[1]));
+            displayName = payload.username;
+        }catch(error){
+            console.log("Failed to decode token", error);
+        }
+    }
+    
     // console.log(foundErrors);
     return(
         <div>
@@ -76,7 +85,7 @@ function PostComposer({setIsLoggedIn}){
             <h1>PostComposer</h1>
             <div className="heading-right">
                 <a className="link" href="https://github.com/apaleblueman/postcomposer">source code</a>
-                <p>{usernameParsed['username']}</p>
+                <p>{displayName}</p>
                 <button onClick={()=>{
                         localStorage.removeItem("jwtToken");
                         setIsLoggedIn(false);
