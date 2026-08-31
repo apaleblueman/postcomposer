@@ -13,15 +13,15 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function App() {
 
-  useEffect(() => {
-    if(localStorage.getItem("jwtToken") !== null){
-      // setIsLoggedIn(true);
-      const rawToken = localStorage.getItem("jwtToken");
-      const splitToken = atob(rawToken.split(".")[1]);
-      const tokenOBJ = JSON.parse(splitToken);
-      dispatch(login({role:tokenOBJ.role,token:rawToken}))
-    }
-  },[]);
+  // useEffect(() => {
+  //   if(localStorage.getItem("jwtToken") !== null){
+  //     // setIsLoggedIn(true);
+  //     const rawToken = localStorage.getItem("jwtToken");
+  //     const splitToken = atob(rawToken.split(".")[1]);
+  //     const tokenOBJ = JSON.parse(splitToken);
+  //     dispatch(login({role:tokenOBJ.role,token:rawToken}))
+  //   }
+  // },[]);
   const dispatch = useDispatch();
   const drafts = useSelector((state)=>state.drafts.drafts)
 
@@ -41,14 +41,14 @@ function App() {
   //   </>:<Login/>
   // );
 
-  return <BrowserRouter>
+  return <BrowserRouter basename="/postcomposer">
     <Routes>
       <Route
       path="/"
       element={<Login/>}
       />
       <Route
-      path="/PostComposer"
+      path="/postcomposer"
       element={
         <ProtectedRoutes allowedRoles={["Admin", "Editor", "Viewer"]}>
           <><PostComposer/>

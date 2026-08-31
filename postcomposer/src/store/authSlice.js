@@ -1,9 +1,18 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
-
+let startingRole = null, startingToken = null, startingLogin = false;
+if(localStorage.getItem("jwtToken") !== null){
+      // setIsLoggedIn(true);
+      const rawToken = localStorage.getItem("jwtToken");
+      const splitToken = atob(rawToken.split(".")[1]);
+      const tokenOBJ = JSON.parse(splitToken);
+      startingRole = tokenOBJ.role;
+      startingToken = rawToken;
+      startingLogin = true;
+}
 const initialState = {
- isLoggedIn : false,
- role:null,
- token:null   
+ isLoggedIn : startingLogin,
+ role:startingRole,
+ token:startingToken   
 }
 
 const authSlice = createSlice({
