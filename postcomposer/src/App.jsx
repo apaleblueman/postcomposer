@@ -6,6 +6,11 @@ import "./assets/PostComposer.css";
 import Draft from "./components/Draft";
 import Login from "./components/Login";
 import { login } from "./store/authSlice";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+
+
+
 function App() {
 
   useEffect(() => {
@@ -26,15 +31,33 @@ function App() {
 
 
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
+  // const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
   
-     return (
-    isLoggedIn ?
-    <>
-    <PostComposer/>
-    <Draft/>
-    </>:<Login/>
-  );
+  //    return (
+  //   isLoggedIn ?
+  //   <>
+  //   <PostComposer/>
+  //   <Draft/>
+  //   </>:<Login/>
+  // );
+
+  return <BrowserRouter>
+    <Routes>
+      <Route
+      path="/"
+      element={<Login/>}
+      />
+      <Route
+      path="/PostComposer"
+      element={
+        <ProtectedRoutes allowedRoles={["Admin", "Editor", "Viewer"]}>
+          <><PostComposer/>
+          <Draft/></>
+        </ProtectedRoutes>
+      }
+      />
+    </Routes>
+  </BrowserRouter>
 }
 
 export default App;

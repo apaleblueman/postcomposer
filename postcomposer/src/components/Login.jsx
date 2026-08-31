@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [username, setUserName] = useState('');
     const [error, setError] = useState('');
@@ -52,6 +54,7 @@ function Login() {
         }else{
             setError("invalid role");
         }
+        navigate("/PostComposer");
     }
     return (
         <div>
