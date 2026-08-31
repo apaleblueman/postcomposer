@@ -6,7 +6,7 @@ import "./assets/PostComposer.css";
 import Draft from "./components/Draft";
 import Login from "./components/Login";
 import { login } from "./store/authSlice";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
 
@@ -41,7 +41,7 @@ function App() {
   //   </>:<Login/>
   // );
 
-  return <BrowserRouter basename="/postcomposer">
+  return <HashRouter basename="/postcomposer">
     <Routes>
       <Route
       path="/"
@@ -57,7 +57,7 @@ function App() {
       }
       />
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 }
 
 export default App;
