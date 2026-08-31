@@ -53,6 +53,7 @@ function Login() {
         setError('');
         }else{
             setError("invalid role");
+            alert("Wrong password or username!");
         }
         navigate("/PostComposer");
     }
