@@ -10,7 +10,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { setPostText,setSelectedPlatforms } from "../store/postsSlice";
 import { selectCurrentPost, selectSelectedPlatforms } from "../store/postsSlice";
 import { logout } from "../store/authSlice";
-
+import { Link } from "react-router-dom";
 // import Draft from "./Draft";
 function DeterminePlatform(selectedPlatforms){
     const sum =selectedPlatforms.reduce((a, b) => a + b, 0)
@@ -69,6 +69,7 @@ function PostComposer({setIsLoggedIn}){
             <h1>PostComposer</h1>
             <div className="heading-right">
                 <a className="link" href="https://github.com/apaleblueman/postcomposer">source code</a>
+                
                 <p>{displayName}</p>
                 <button onClick={()=>{
                         localStorage.removeItem("jwtToken");
@@ -120,6 +121,8 @@ function PostComposer({setIsLoggedIn}){
                         <button type="button">Copy to clipboard</button>
                         </div>
                         </CopyToClipboard>
+
+            <Link to="/calendar">View Calendar</Link>
                 </div>
                 <div className="charactersList">
                         {selectedPlatforms.map((plt)=>{

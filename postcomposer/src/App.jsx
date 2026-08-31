@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import { login } from "./store/authSlice";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import PostsCalendar from "./components/PostsCalendar";
 
 
 
@@ -55,6 +56,10 @@ function App() {
           <Draft/></>
         </ProtectedRoutes>
       }
+      />
+      <Route
+        path="/calendar"
+        element={<PostsCalendar/>}
       />
     </Routes>
   </HashRouter>
