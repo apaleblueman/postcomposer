@@ -41,7 +41,7 @@ function App() {
   //   </>:<Login/>
   // );
 
-  return <HashRouter basename="/postcomposer">
+  return <HashRouter>
     <Routes>
       <Route
       path="/"
